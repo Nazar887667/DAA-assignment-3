@@ -1,0 +1,6 @@
+java.version=21.0.12.1
+java.vm.name=OpenJDK 64-Bit Server VM
+os=Linux amd64
+cpus=1
+max_heap_mb=966
+seed=42 reps=5 min_warmup_runs=3 min_warmup_ms=400 batch_ms=20 max_weight=100

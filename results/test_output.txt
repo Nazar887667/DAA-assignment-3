@@ -1,0 +1,117 @@
+Build OK -> out/
+
+== DSU
+  [PASS] initially 6 singleton sets
+  [PASS] union of different sets returns true
+  [PASS] union of already-joined sets returns false
+  [PASS] connected() reflects unions
+  [PASS] transitive merge: {0,1,2,3},{4},{5}
+  [PASS] all 4 optimisation variants give identical answers on 2000 random unions
+  [PASS] chain: optimised DSU needs far fewer pointer hops (4999 vs 12497500)
+  [PASS] single-element DSU
+
+== MST: small graphs
+  [PASS] 4-vertex graph: Kruskal weight = 6 (got 6)
+  [PASS] 4-vertex graph: Prim weight = 6 (got 6)
+  [PASS] Kruskal: 3 edges, connected
+  [PASS] 5-vertex graph (textbook example): Kruskal weight = 16 (got 16)
+  [PASS] 5-vertex graph (textbook example): Prim weight = 16 (got 16)
+  [PASS] triangle with one heavy edge: Kruskal weight = 2 (got 2)
+  [PASS] triangle with one heavy edge: Prim weight = 2 (got 2)
+  [PASS] single edge: Kruskal weight = 7 (got 7)
+  [PASS] single edge: Prim weight = 7 (got 7)
+
+== MST: disconnected graphs and single vertex
+  [PASS] both detect the graph is NOT connected
+  [PASS] 3 components: {0,1,2}, {3,4}, {5}
+  [PASS] minimum spanning forest weight = 3 + 5 = 8
+  [PASS] forest has V - components = 3 edges
+  [PASS] no edges: not connected, weight 0
+  [PASS] single vertex is connected
+  [PASS] single vertex: empty MST, weight 0
+
+== MST: multiple valid MSTs and duplicate weights
+  [PASS] equal-weight square (4 valid MSTs): Kruskal weight = 15 (got 15)
+  [PASS] equal-weight square (4 valid MSTs): Prim weight = 15 (got 15)
+  [PASS] K4 all weights equal (16 valid MSTs): Kruskal weight = 9 (got 9)
+  [PASS] K4 all weights equal (16 valid MSTs): Prim weight = 9 (got 9)
+  [PASS] mostly duplicate weights: Kruskal weight = 8 (got 8)
+  [PASS] mostly duplicate weights: Prim weight = 8 (got 8)
+  [PASS] both return a tree with V-1 edges even if the trees differ
+  [PASS] parallel edges: cheapest one chosen: Kruskal weight = 4 (got 4)
+  [PASS] parallel edges: cheapest one chosen: Prim weight = 4 (got 4)
+
+== MST: random tiny graphs vs. brute force (all spanning trees enumerated)
+  [PASS] Kruskal == Prim == brute force on 300 random graphs (300 matched)
+
+== MST: Kruskal vs Prim on random connected graphs (incl. the benchmark sizes)
+  [PASS] V=10 E=30: generated graph is connected
+  [PASS] V=10 E=30: equal MST weight (163)
+  [PASS] V=10: both trees have V-1 edges
+  [PASS] V=100 E=500: generated graph is connected
+  [PASS] V=100 E=500: equal MST weight (1263)
+  [PASS] V=100: both trees have V-1 edges
+  [PASS] V=1000 E=5000: generated graph is connected
+  [PASS] V=1000 E=5000: equal MST weight (12682)
+  [PASS] V=1000: both trees have V-1 edges
+  [PASS] V=500 E=499: generated graph is connected
+  [PASS] V=500 E=499: equal MST weight (24155)
+  [PASS] V=500: both trees have V-1 edges
+  [PASS] V=300 E=20000: generated graph is connected
+  [PASS] V=300 E=20000: equal MST weight (449)
+  [PASS] V=300: both trees have V-1 edges
+  [PASS] 200 further random graphs: Kruskal weight == Prim weight (failures would be printed above)
+  [PASS] Kruskal weight independent of DSU optimisations
+
+== Topological ordering
+  [PASS] textbook DAG: valid order [4, 5, 2, 0, 3, 1]
+  [PASS] 3-cycle plus tail: cycle detected, no order returned
+  [PASS] only 0 of 4 vertices could be ordered
+  [PASS] self-loop counts as a cycle
+  [PASS] single vertex: order [0]
+  [PASS] no edges: any order is valid
+  [PASS] valid order for all 300 random DAGs (300)
+  [PASS] cycle detected in all 300 DAGs with an injected back edge (300)
+  [PASS] benchmark-size DAG (1000/5000) ordered correctly
+  [PASS] benchmark-size random digraph (1000/5000) contains a cycle
+
+== Strongly connected components
+  [PASS] textbook graph has exactly 3 SCCs
+  [PASS] {0,1,2} together
+  [PASS] {3,4,5} together
+  [PASS] {6,7} separate from others
+  [PASS] every vertex belongs to exactly one SCC
+  [PASS] DAG: every vertex is its own SCC
+  [PASS] directed ring: one SCC
+  [PASS] single vertex: one SCC
+  [PASS] no edges: V singleton SCCs
+  [PASS] 200,000-vertex path handled without stack overflow
+  [PASS] Tarjan == reachability oracle on 300 random digraphs (300 matched)
+
+== Dijkstra
+  [PASS] textbook graph distances [0, 7, 9, 20, 20, 11]
+  [PASS] path to 4 is 0-2-5-4
+  [PASS] path to source is [source]
+  [PASS] vertices 3,4 unreachable -> INF
+  [PASS] no path for unreachable vertices, 3 reachable
+  [PASS] one-way road: 0 not reachable from 1
+  [PASS] single vertex: distance 0
+  [PASS] zero-weight edges allowed
+  [PASS] two equal-length shortest paths: distance 2
+  [PASS] undirected graph: 2->1->0 = 4
+  [PASS] negative edge weight is rejected with IllegalArgumentException
+  [PASS] counter-example: true dist(1) = 1 (via 0->2->1) but unguarded Dijkstra says 2
+
+== Dijkstra vs. Bellman-Ford oracle on random graphs
+  [PASS] Dijkstra == Bellman-Ford on 400 random graphs (400 matched)
+  [PASS] reconstructed paths start at the source, end at the target and sum to the reported distance
+
+== Graph generators (reproducibility)
+  [PASS] same seed -> identical graph
+  [PASS] different seed -> different graph
+  [PASS] requested edge count produced exactly
+  [PASS] no self-loops or parallel edges
+  [PASS] too few edges for a connected graph is rejected
+
+==========================================
+Passed: 291   Failed: 0
